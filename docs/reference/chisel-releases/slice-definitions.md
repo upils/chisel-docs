@@ -78,6 +78,61 @@ For example:
 archive: ubuntu
 ```
 
+```{note}
+The `archive` field and the {ref}`store<slice_definitions_format_store>`
+field are mutually exclusive: a package must be fetched from either an
+archive or a store, but not both.
+```
+
+(slice_definitions_format_store)=
+
+### `store`
+
+| Field   | Type     | Required | Supported values                                                  | Compatibility |
+| ------- | -------- | -------- | ----------------------------------------------------------------- | ------------- |
+| `store` | `string` | Optional | Store name, from {ref}`stores<chisel_yaml_format_spec_stores>`.   | >= `v3`       |
+
+Specifies a particular {ref}`store<chisel_yaml_format_spec_stores>` from
+where this package should be fetched. If specified, Chisel fetches this
+package from that store rather than from an archive. The store name must be
+defined in {ref}`chisel_yaml_format_spec_stores`.
+
+The `store` field is mutually exclusive with
+{ref}`archive<slice_definitions_format_archive>`: a package must be fetched
+from either an archive or a store, but not both.
+
+When `store` is set, {ref}`default-track<slice_definitions_format_default_track>`
+must also be set.
+
+For example:
+
+```yaml
+store: bin
+default-track: stable
+```
+
+
+(slice_definitions_format_default_track)=
+
+### `default-track`
+
+| Field           | Type     | Required                                  | Supported values | Compatibility |
+| --------------- | -------- | ----------------------------------------- | ---------------- | ------------- |
+| `default-track` | `string` | Required when `store` is set.             | A track name.    | >= `v3`       |
+
+Specifies the default track for a {ref}`store<slice_definitions_format_store>`
+package.
+
+This field is required when {ref}`store<slice_definitions_format_store>` is
+set, and must not be set when `store` is not set.
+
+For example:
+
+```yaml
+store: bin
+default-track: stable
+```
+
 (slice_definitions_format_essential)=
 
 ### `essential`

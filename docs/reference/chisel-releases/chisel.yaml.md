@@ -362,6 +362,73 @@ The `armor` field contains the multi-line armored ASCII data of OpenPGP public
 key.
 
 
+(chisel_yaml_format_spec_stores)=
+
+### `stores`
+
+| Field      | Type     | Required | Compatibility |
+| ---------- | -------- | -------- | ------------- |
+| `stores`   | `object` | Optional | >= `v3`       |
+
+Tells Chisel which Stores to fetch packages from. A Store is an alternative
+package source to {ref}`archives<chisel_yaml_format_spec_archives>`, serving
+packages via a store API rather than from a Debian archive. Stores are used to
+distribute packages that are not available in the standard Ubuntu archives,
+such as `bin` packages.
+
+For example:
+
+```yaml
+stores:
+  bin:
+    kind: bin
+    version: 26.10
+    default-prefix: "bin-"
+```
+
+
+(chisel_yaml_format_spec_stores_version)=
+
+### `stores.<name>.version`
+
+| Field     | Type     | Required | Supported values                                        | Compatibility |
+| --------- | -------- | -------- | ------------------------------------------------------- | ------------- |
+| `version` | `string` | Required | Ubuntu release in `xx.yy` format e.g. 22.04, 24.04 etc. | >= `v3`       |
+
+Indicates the Ubuntu release this store should fetch the packages for.
+
+
+(chisel_yaml_format_spec_stores_kind)=
+
+### `stores.<name>.kind`
+
+| Field  | Type     | Required | Supported values | Compatibility |
+| ------ | -------- | -------- | ---------------- | ------------- |
+| `kind` | `string` | Required | `bin`            | >= `v3`       |
+
+Specifies the kind of store. The `bin` kind refers to bin packages
+distributed via a store API.
+
+
+(chisel_yaml_format_spec_stores_default_prefix)=
+
+### `stores.<name>.default-prefix`
+
+| Field            | Type     | Required | Compatibility |
+| ---------------- | -------- | -------- | ------------- |
+| `default-prefix` | `string` | Required | >= `v3`       |
+
+Specifies the prefix prepended to the bare package name (as defined by the
+`package` field in the slice definitions file) to form the unique package
+identifier used across the release. For example, with `default-prefix: "bin-"`
+and a slice definitions file declaring `package: curl`, the unique package
+identifier becomes `bin-curl`.
+
+This unique identifier is used in slice references (e.g. in {ref}`essential<slice_definitions_format_slices_essential>`
+dependencies and {ref}`prefer<slice_definitions_format_slices_contents_prefer>`), while the bare name is used for package lookups
+in the store.
+
+
 (chisel_yaml_example)=
 
 ## Example
