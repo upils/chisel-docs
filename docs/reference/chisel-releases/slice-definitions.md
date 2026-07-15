@@ -119,7 +119,7 @@ For example:
 
 ```yaml
 store: bin
-default-track: stable
+default-track: 3.1
 ```
 
 
@@ -141,7 +141,7 @@ For example:
 
 ```yaml
 store: bin
-default-track: stable
+default-track: 3.1
 ```
 
 (slice_definitions_format_essential)=
