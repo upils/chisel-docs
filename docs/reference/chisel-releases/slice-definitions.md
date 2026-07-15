@@ -25,6 +25,17 @@ Although the `hello.yaml` file can be placed in a sub-directory of `slices/` e.g
 `slices/hello.yaml`. The {{chisel_releases_repo}} follows the latter.
 ```
 
+```{note}
+In format `v3`, bin slice definitions (i.e. slice definitions for packages
+fetched from a {ref}`store<slice_definitions_format_store>`) must be stored in
+a separate `bin-slices/` directory rather than in `slices/`. This is a
+backwards compatibility mechanism for Chisel versions that do not support
+stores: those old versions only read `slices/` and are unaware of
+`bin-slices/`, so they are not affected by the new store fields. From format
+`v4` onwards, bin slice definitions live in `slices/` alongside regular ones,
+so `bin-slices/` is not read.
+```
+
 (slice_definitions_format)=
 
 ## Format specification
