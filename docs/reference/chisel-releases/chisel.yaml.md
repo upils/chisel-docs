@@ -372,7 +372,7 @@ key.
 | ---------- | -------- | -------- | ------------- |
 | `stores`   | `object` | Optional | >= `v3`       |
 
-Tells Chisel which Stores to fetch packages from. A Store is an alternative
+Tells Chisel which stores to fetch packages from. A store is an alternative
 package source to {ref}`archives<chisel_yaml_format_spec_archives>`, serving
 packages via a store API rather than from a Debian archive. Stores are used to
 distribute packages that are not available in the standard Ubuntu archives,
@@ -389,7 +389,7 @@ stores:
 ```
 
 ```{note}
-In format `v3`, bin slice definitions must be stored in a separate
+In format `v3`, bin slice definitions must be stored in a separate, top-level,
 `bin-slices/` directory. This is a backwards compatibility mechanism for Chisel
 versions that do not support stores: those old versions only read `slices/` and
 are unaware of `bin-slices/`, so they are not affected by the new store fields.
