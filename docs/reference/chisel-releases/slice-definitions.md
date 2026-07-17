@@ -81,6 +81,9 @@ fetched from. If specified, Chisel fetches this package from that archive despit
 {ref}`chisel_yaml_format_spec_archives_priority` settings in
 {ref}`chisel_yaml_ref`.
 
+The `archive` field and the {ref}`store<slice_definitions_format_store>`
+field are mutually exclusive: a package must be fetched from either an
+archive or a store, but not both.
 
 The archive name must be defined in {ref}`chisel_yaml_format_spec_archives`.
 For example:
@@ -89,11 +92,6 @@ For example:
 archive: ubuntu
 ```
 
-```{note}
-The `archive` field and the {ref}`store<slice_definitions_format_store>`
-field are mutually exclusive: a package must be fetched from either an
-archive or a store, but not both.
-```
 
 (slice_definitions_format_store)=
 
@@ -135,7 +133,7 @@ Specifies the default track for a {ref}`store<slice_definitions_format_store>`
 package.
 
 This field is required when {ref}`store<slice_definitions_format_store>` is
-set, and must not be set when `store` is not set.
+set, and must not be included when `store` is not set.
 
 For example:
 
