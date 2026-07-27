@@ -1,7 +1,7 @@
 ---
 myst:
   html_meta:
-    description: "Explanation of how Chisel works: reading chisel-releases, fetching packages from Ubuntu archives and stores, and extracting selected files into a root file system."
+    description: "Explanation of how Chisel works: read chisel-releases, fetch packages from Ubuntu archives and stores, and extract selected files into a root file system."
 ---
 
 (chisel_mo_explanation)=
