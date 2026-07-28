@@ -1,0 +1,4 @@
+# For details: https://canonical-workshop.readthedocs-hosted.com/latest/explanation/sdks/sdks/#sketch-sdk
+name: chisel-docs-dev-dependencies
+plugs:
+slots:

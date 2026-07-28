@@ -1,0 +1,18 @@
+name: chisel-docs-dev
+base: ubuntu@24.04
+sdks:
+  - name: project-chisel-docs-dev-dependencies
+    slots:
+      docs:
+        interface: tunnel
+        endpoint: 127.0.0.1:8000
+  - name: vscode-remote # Standard tool for agentic work.
+    # Publisher:  Dmitry Lyfar (dlyfar)
+    # https://github.com/canonical/vscode-remote-sdk
+  - name: system
+    plugs:
+      docs:
+        interface: tunnel
+        endpoint: 127.0.0.1:8000
+actions:
+  run: make -C docs run

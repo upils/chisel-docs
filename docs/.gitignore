@@ -24,3 +24,4 @@ package*.json
 __pycache__
 .idea/
 .vscode/
+.workshop.lock
