@@ -129,8 +129,11 @@ default-track: 3.1
 | --------------- | -------- | ----------------------------------------- | ---------------- | ------------- |
 | `default-track` | `string` | Required when `store` is set.             | A track name.    | >= `v3`       |
 
-Specifies the default track for a {ref}`store<slice_definitions_format_store>`
-package.
+Specifies the default {ref}`track<channels_explanation>` for a
+{ref}`store<slice_definitions_format_store>` package. It is used when the slice
+reference given to the {{cut_cmd}} does not
+{ref}`specify a channel<cut_command_reference_channels>`. In that case, the
+`stable` risk is used with this track.
 
 This field is required when {ref}`store<slice_definitions_format_store>` is
 set, and must not be included when `store` is not set.
@@ -183,6 +186,39 @@ package: hello
 essential:
   hello_copyright: {}
   foo_bar: {arch: arm64}
+slices:
+  ...
+```
+
+#### `essential.<slice>.channel`
+
+| Field     | Type                        | Required | Supported values                                                     | Compatibility |
+| --------- | --------------------------- | -------- | -------------------------------------------------------------------- | ------------- |
+| `channel` | `string` or `array<string>` | Optional | {ref}`Channel patterns<slice_definitions_format_channel_patterns>`.  | >= `v3`       |
+
+Used to specify the {ref}`channels<channels_explanation>` for which an _essential_
+dependency should be installed. This field can take a single
+{ref}`channel pattern<slice_definitions_format_channel_patterns>` or a list as
+its value.
+
+This field is only applicable to packages fetched from a
+{ref}`store<slice_definitions_format_store>`, as those are the only ones
+published per channel.
+
+The patterns apply to the channel of the package that holds the _essential_
+entry, not to the channel of the required package.
+
+In the following example, `bin-mypkg_compat` is only required by the slices of
+`mypkg` when the `2.0` track of `mypkg` is being cut, while `bin-mypkg_copyright`
+is required for every channel.
+
+```yaml
+package: mypkg
+store: bin
+default-track: "3.0"
+essential:
+  bin-mypkg_copyright: {}
+  bin-mypkg_compat: {channel: 2.0/*}
 slices:
   ...
 ```
@@ -296,6 +332,31 @@ slices:
       gcc-x86-64-linux-gnu_gcc: {arch: [amd64]}
       gcc-15_gcc-15:
 
+```
+
+#### `slices.<name>.essential.<slice>.channel`
+
+| Field     | Type                        | Required | Supported values                                                     | Compatibility |
+| --------- | --------------------------- | -------- | -------------------------------------------------------------------- | ------------- |
+| `channel` | `string` or `array<string>` | Optional | {ref}`Channel patterns<slice_definitions_format_channel_patterns>`.  | >= `v3`       |
+
+Same as the _essential_
+{ref}`channel field<slice_definitions_format_essential>` of the package,
+but only applicable for the current slice.
+
+In the following example, `bin-mypkg_compat` is only required by `myslice` when
+any risk but `stable` of the `2.0` track of `mypkg` is being cut.
+
+```yaml
+package: mypkg
+store: bin
+default-track: "3.0"
+slices:
+  myslice:
+    essential:
+      bin-mypkg_compat: {channel: 2.0/!stable}
+  compat:
+    ...
 ```
 ````
 
@@ -481,6 +542,68 @@ In the following example, `/foo` will be installed for `i386` installations and
     contents:
       /foo: {arch: i386}
       /bar: {arch: [amd64, arm64]}
+```
+
+(slice_definitions_format_slices_contents_channel)=
+
+### `slices.<name>.contents.<path>.channel`
+
+| Field     | Type                        | Required | Supported values                | Compatibility |
+| --------- | --------------------------- | -------- | ------------------------------- | ------------- |
+| `channel` | `string` or `array<string>` | Optional | Channel patterns, see below.    | >= `v3`       |
+
+Used to specify the {ref}`channels<channels_explanation>` a _contents_ path
+should be installed for. This field can take a single channel pattern or a list
+as its value.
+
+This field is only applicable to packages fetched from a
+{ref}`store<slice_definitions_format_store>`.
+
+In the following example of a package whose
+{ref}`default-track<slice_definitions_format_default_track>` is `3.0`:
+
+- `/dir/legacy` is installed for any risk of the `2.0` track except `stable`.
+- `/dir/beta-only` is installed for the `beta` and `edge` risks of the `2.0` track.
+- `/dir/current` is only installed for `3.0/stable`.
+- `/dir/shared` is installed for any risk of the `2.0` and `3.0` tracks.
+
+```yaml
+package: mypkg
+store: bin
+default-track: "3.0"
+slices:
+  myslice:
+    contents:
+      /dir/legacy: {channel: 2.0/!stable}
+      /dir/beta-only: {channel: "2.0/beta,edge"}
+      /dir/current: {channel: 3.0/stable}
+      /dir/shared: {channel: [2.0/*, 3.0/*]}
+```
+
+(slice_definitions_format_channel_patterns)=
+
+#### Channel patterns
+
+A channel pattern is a `<track>/<risk>` value where the track is a literal and
+only the risk part accepts operators:
+
+| Pattern                       | Matches                              |
+| ----------------------------- | ------------------------------------ |
+| `<track>/<risk>`              | That exact risk of that track.       |
+| `<track>/*`                   | Any risk of that track.              |
+| `<track>/!<risk>`             | Any risk of that track but that one. |
+| `<track>/<risk>,<risk>[,...]` | Only those risks of that track.      |
+
+A list of patterns matches the union of the channels each pattern matches. A
+track must appear at most once across the values.
+
+```{note}
+- A value holding a comma must be quoted, as shown above, so that YAML does not
+  read it as a separator.
+- Branches, as in `<track>/<risk>/<branch>`, are never part of a pattern. An
+  entry applies to every branch of the risk it matches.
+- Patterns are validated when the release is read, so a malformed value returns
+  an error even if no slice of that package is being cut.
 ```
 
 (slice_definitions_format_slices_contents_mutable)=

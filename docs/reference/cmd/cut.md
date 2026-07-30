@@ -14,6 +14,31 @@ new file system tree in the root location.
 By default it fetches the slices for the same Ubuntu version as the
 current host, unless the `--release` option is used.
 
+(cut_command_reference_channels)=
+
+## Selecting a channel
+
+Slices are referred to as `<package>_<slice>`. For packages that come from a
+{ref}`store<chisel_yaml_format_spec_stores>`, a
+{ref}`channel<channels_explanation>` can be appended to the slice reference to
+select which one to fetch:
+
+```none
+<package>_<slice>[@<channel>]
+```
+
+The channel is either a `<track>/<risk>` value, such as `2.0/edge`, or a track
+alone, such as `2.0`. In this case, the `stable` risk is used implicitly. When
+the channel is omitted altogether, Chisel uses the
+{ref}`default-track<slice_definitions_format_default_track>` of the package.
+
+```{note}
+- All the selected slices of the same package must agree on the channel.
+- Using a channel with a package fetched from an
+  {ref}`archive<chisel_yaml_format_spec_archives>` returns an error, as does
+  using one with the {{find_cmd}} or the {{info_cmd}}.
+```
+
 ## Options
 
 <!-- Start: cut command options -->

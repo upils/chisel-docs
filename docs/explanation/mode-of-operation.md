@@ -60,6 +60,8 @@ parsing their `InRelease` files. Packages may also be fetched from
 {ref}`stores<chisel_yaml_format_spec_stores>`, which serve packages via a store
 API rather than from a Debian archive. Stores are used to distribute packages
 that are not available in the standard Ubuntu archives, such as `bin` packages.
+Store packages are published per {ref}`channel<channels_explanation>`. Chisel
+resolves the channel before fetching them.
    
 </td>
   </tr>

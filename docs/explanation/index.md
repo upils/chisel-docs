@@ -32,3 +32,12 @@ Slices can be defined following two different approaches.
 
 slice-design-approaches
 ```
+
+## Channels
+Packages fetched from stores are published per channel.
+
+```{toctree}
+:maxdepth: 1
+
+channels
+```
