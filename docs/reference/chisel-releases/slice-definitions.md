@@ -132,7 +132,7 @@ default-track: 3.1
 Specifies the default {ref}`track<channels_explanation>` for a
 {ref}`store<slice_definitions_format_store>` package. It is used when the slice
 reference given to the {{cut_cmd}} does not
-{ref}`specify a channel<cut_command_reference_channels>`, in which case the
+{ref}`specify a channel<cut_command_reference_channels>`. In that case, the
 `stable` risk is used with this track.
 
 This field is required when {ref}`store<slice_definitions_format_store>` is
@@ -196,11 +196,14 @@ slices:
 | --------- | --------------------------- | -------- | -------------------------------------------------------------------- | ------------- |
 | `channel` | `string` or `array<string>` | Optional | {ref}`Channel patterns<slice_definitions_format_channel_patterns>`.  | >= `v3`       |
 
-Used to specify the {ref}`channels<channels_explanation>` an _essential_
-dependency should be installed for. This field can take a single
-{ref}`channel pattern<slice_definitions_format_channel_patterns>` or a list, as
-its value. It requires the package to be fetched from a
-{ref}`store<slice_definitions_format_store>`.
+Used to specify the {ref}`channels<channels_explanation>` for which an _essential_
+dependency should be installed. This field can take a single
+{ref}`channel pattern<slice_definitions_format_channel_patterns>` or a list as
+its value.
+
+This field is only applicable to packages fetched from a
+{ref}`store<slice_definitions_format_store>`, as those are the only ones
+published per channel.
 
 The patterns apply to the channel of the package that holds the _essential_
 entry, not to the channel of the required package.
@@ -550,16 +553,18 @@ In the following example, `/foo` will be installed for `i386` installations and
 | `channel` | `string` or `array<string>` | Optional | Channel patterns, see below.    | >= `v3`       |
 
 Used to specify the {ref}`channels<channels_explanation>` a _contents_ path
-should be installed for. This field can take a single channel pattern or a list,
-as its value. It requires the package to be fetched from a
+should be installed for. This field can take a single channel pattern or a list
+as its value.
+
+This field is only applicable to packages fetched from a
 {ref}`store<slice_definitions_format_store>`.
 
-In the following example, of a package whose
+In the following example of a package whose
 {ref}`default-track<slice_definitions_format_default_track>` is `3.0`:
 
-- `/dir/legacy` is installed for any risk of the `2.0` track except `stable`,
-- `/dir/beta-only` is installed for the `beta` and `edge` risks of the `2.0` track,
-- `/dir/current` is only installed for `3.0/stable`, and
+- `/dir/legacy` is installed for any risk of the `2.0` track except `stable`.
+- `/dir/beta-only` is installed for the `beta` and `edge` risks of the `2.0` track.
+- `/dir/current` is only installed for `3.0/stable`.
 - `/dir/shared` is installed for any risk of the `2.0` and `3.0` tracks.
 
 ```yaml

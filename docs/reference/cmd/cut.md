@@ -28,7 +28,7 @@ select which one to fetch:
 ```
 
 The channel is either a `<track>/<risk>` value, such as `2.0/edge`, or a track
-alone, such as `2.0`, in which case the `stable` risk is used implicitly. When
+alone, such as `2.0`. In this case, the `stable` risk is used implicitly. When
 the channel is omitted altogether, Chisel uses the
 {ref}`default-track<slice_definitions_format_default_track>` of the package.
 
