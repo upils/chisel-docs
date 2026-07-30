@@ -598,7 +598,8 @@ A list of patterns matches the union of the channels each pattern matches. A
 track must appear at most once across the values.
 
 ```{note}
-- A value holding a comma must be quoted, as shown above.
+- A value holding a comma must be quoted, as shown above, so that YAML does not
+  read it as a separator.
 - Branches, as in `<track>/<risk>/<branch>`, are never part of a pattern. An
   entry applies to every branch of the risk it matches.
 - Patterns are validated when the release is read, so a malformed value returns
