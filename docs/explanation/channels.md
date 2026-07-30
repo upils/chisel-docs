@@ -37,10 +37,10 @@ A channel may also hold an ephemeral **branch**, as in
 
 There are two ways a channel is decided:
 
-1. Explicitly, by appending it to the slice reference on the command line, as in
+- Explicitly, by appending it to the slice reference on the command line, as in
    `chisel cut … mybin_myslice@2.0/edge`. See
    {ref}`cut_command_reference_channels`.
-2. Implicitly, from the
+- Implicitly, from the
    {ref}`default-track<slice_definitions_format_default_track>` of the package,
    which is mandatory for every package fetched from a store. Note that a slice
    definitions file only declares a track, so the risk stays implicit and
@@ -52,16 +52,13 @@ package must agree on the channel.
 ## Channels and slice definitions
 
 The content of a package may differ from one channel to another. To describe
-this in a single slice definitions file, contents paths and _essential_ entries
+this in a single slice definitions file, _contents_ paths and _essential_ entries
 accept a
 {ref}`channel<slice_definitions_format_slices_contents_channel>` field holding
 the {ref}`patterns<slice_definitions_format_channel_patterns>` of the channels
 they apply to. Entries that do not match the channel being cut are silently
-skipped, exactly as entries that do not match the architecture being cut.
+skipped, just like entries that do not match the architecture being cut.
 
 The channel is deliberately kept separate from the identity of a slice. It is
 not recorded in the {ref}`chisel_manifest_ref`, and it takes part in neither
-dependency resolution nor path conflict detection. Consequently, a release is
-validated once and for all: whether two paths conflict, or whether the
-_essential_ entries form a loop, does not depend on the channels a given
-`chisel cut` invocation happens to use.
+dependency resolution nor path conflict detection.

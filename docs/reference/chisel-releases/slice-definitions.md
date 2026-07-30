@@ -337,7 +337,8 @@ slices:
 | --------- | --------------------------- | -------- | -------------------------------------------------------------------- | ------------- |
 | `channel` | `string` or `array<string>` | Optional | {ref}`Channel patterns<slice_definitions_format_channel_patterns>`.  | >= `v3`       |
 
-Same as the {ref}`package-wide essential channel field<slice_definitions_format_essential>`,
+Same as the _essential_
+{ref}`channel field<slice_definitions_format_essential>` of the package,
 but only applicable for the current slice.
 
 In the following example, `bin-mypkg_compat` is only required by `myslice` when
@@ -548,9 +549,9 @@ In the following example, `/foo` will be installed for `i386` installations and
 | --------- | --------------------------- | -------- | ------------------------------- | ------------- |
 | `channel` | `string` or `array<string>` | Optional | Channel patterns, see below.    | >= `v3`       |
 
-Used to specify the {ref}`channels<channels_explanation>` a path should be
-installed for. This field can take a single channel pattern or a list, as its
-value. It requires the package to be fetched from a
+Used to specify the {ref}`channels<channels_explanation>` a _contents_ path
+should be installed for. This field can take a single channel pattern or a list,
+as its value. It requires the package to be fetched from a
 {ref}`store<slice_definitions_format_store>`.
 
 In the following example, of a package whose
