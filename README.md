@@ -123,7 +123,7 @@ To contact the maintainers for any purposes, please use the [Chisel room in Matr
 
 <!-- LINKS -->
 
-[Chisel documentation]: https://documentation.ubuntu.com/chisel/en/latest
+[Chisel documentation]: https://ubuntu.com/chisel/docs
 [Canonical contributor license agreement]: https://ubuntu.com/legal/contributors
 [Chisel room in Matrix]: https://matrix.to/#/#chisel:ubuntu.com
 [Conventional Commits v1.0.0]: https://www.conventionalcommits.org/en/v1.0.0/
